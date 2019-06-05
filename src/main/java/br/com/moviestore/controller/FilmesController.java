@@ -16,14 +16,14 @@ import br.com.moviestore.model.Filme;
 import br.com.moviestore.service.FilmeService;
 
 @RestController
-@RequestMapping({"/filme"})
+@RequestMapping({"/restrito"})
 public class FilmesController {
 	
 	@Autowired
 	FilmeService filmeService;
 	
 	@RequestMapping(
-			method=RequestMethod.GET, value="/lista-filmes", 
+			method=RequestMethod.GET, value="/filme/lista-filmes",
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Optional<Filme>> listarFilmes(@RequestParam String titulo) {
@@ -31,7 +31,7 @@ public class FilmesController {
 	}
 	
 	@RequestMapping(
-			method=RequestMethod.GET, value="/lista-filmes-disponiveis", 
+			method=RequestMethod.GET, value="/filme/lista-filmes-disponiveis",
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<Filme>> listarFilmes() {

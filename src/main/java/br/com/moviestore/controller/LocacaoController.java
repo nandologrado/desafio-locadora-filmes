@@ -13,14 +13,14 @@ import br.com.moviestore.model.Locacao;
 import br.com.moviestore.service.LocacaoService;
 
 @RestController
-@RequestMapping({"/locacao"})
+@RequestMapping({"/restrito"})
 public class LocacaoController {
 	
 	@Autowired
 	LocacaoService locacaoService;
 	
 	@RequestMapping(
-			method=RequestMethod.POST, value="/locacao-filme", 
+			method=RequestMethod.POST, value="/locacao/loca-filme",
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Locacao> locarFilme(@RequestParam String email, @RequestParam String titulo) {
@@ -28,7 +28,7 @@ public class LocacaoController {
 	}
 	
 	@RequestMapping(
-			method=RequestMethod.POST, value="/devolucao-filme", 
+			method=RequestMethod.POST, value="/devolve-filme",
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Locacao> deveolverFilme(@RequestParam String email, @RequestParam String titulo) {

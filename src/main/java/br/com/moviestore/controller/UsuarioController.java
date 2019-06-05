@@ -13,20 +13,20 @@ import br.com.moviestore.model.Usuario;
 import br.com.moviestore.service.UsuarioService;
 
 @RestController
-@RequestMapping({"/usuarios"})
+@RequestMapping({"/usuario"})
 public class UsuarioController {
 
 	@Autowired 
 	UsuarioService usuarioService;
 	
 	@RequestMapping(
-			method=RequestMethod.POST, value="/cadastro", 
+			method=RequestMethod.POST, value="/cadastro",
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
 		return new ResponseEntity<>(usuarioService.salvarUsuario(usuario), HttpStatus.CREATED);
 	}
-	
-	
-	
+
+
+
 }
