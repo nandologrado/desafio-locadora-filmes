@@ -11,8 +11,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.validation.annotation.Validated;
+
 @Entity
 @Table(name="usuario")
+@Validated
 public class Usuario implements Serializable{
 	
 	private static final long serialVersionUID = -5627393233691018720L;
@@ -22,15 +25,15 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idUsuario;
 	
-	@NotNull
+	@NotNull(message = "Por favor, informe seu nome do cliente")
 	@Column(name="nome_usuario", nullable = false)
 	private String nome;
 	
-	@NotBlank
+	@NotBlank(message = "Por favor, informe o seu nome")
 	@Column(nullable = false)
 	private String email;
 	
-	@NotNull
+	@NotNull(message = "Por favor, informe a senha")
 	@Column(nullable = false)
 	private String senha;
 

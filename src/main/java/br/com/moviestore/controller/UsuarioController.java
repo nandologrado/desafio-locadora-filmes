@@ -23,7 +23,7 @@ public class UsuarioController {
 			method=RequestMethod.POST, value="/cadastro", 
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> cadastrarCliente(@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
 		return new ResponseEntity<>(usuarioService.salvarUsuario(usuario), HttpStatus.CREATED);
 	}
 	

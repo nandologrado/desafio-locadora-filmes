@@ -1,11 +1,16 @@
 package br.com.moviestore.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.io.Serializable;
 
 @Entity
 @Table(name="filme")
+@Validated
 public class Filme implements Serializable {
 
 	private static final long serialVersionUID = 4732067422355563269L;
@@ -25,6 +30,7 @@ public class Filme implements Serializable {
 
     @NotNull
     @Column(name = "qt_copias",nullable = false)
+    @Min(value = 0, message = "Não existe cópias Disponíveis")
     private int qtCopias;
 
     public Long getIdfilme() {

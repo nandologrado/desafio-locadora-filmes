@@ -16,12 +16,12 @@ public class Locacao implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idlocacao;
 
-    @NotNull
+	@NotNull(message = "O cliente não foi localizado")
     @ManyToOne
     @JoinColumn(name="id_usuario", nullable=false)
     private Usuario usuario;
 
-    @NotNull
+	@NotNull(message = "O filme não foi localizado")
     @ManyToOne
     @JoinColumn(name="id_filme", nullable=false)
     private Filme filme;
@@ -31,10 +31,8 @@ public class Locacao implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dtLocacao;
 
-    @NotNull
-    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date dtDevolucao;
+    private Date dtRetorno;
 
     public Long getIdlocacao() {
         return idlocacao;
@@ -68,12 +66,12 @@ public class Locacao implements Serializable {
         this.dtLocacao = dtLocacao;
     }
 
-    public Date getDtDevolucao() {
-        return dtDevolucao;
+    public Date getDtRetorno() {
+        return dtRetorno;
     }
 
-    public void setDtDevolucao(Date dtDevolucao) {
-        this.dtDevolucao = dtDevolucao;
+    public void setDtRetorno(Date dtDevolucao) {
+        this.dtRetorno = dtDevolucao;
     }
 
     @Override
@@ -87,7 +85,7 @@ public class Locacao implements Serializable {
         if (!usuario.equals(locacao.usuario)) return false;
         if (!filme.equals(locacao.filme)) return false;
         if (!dtLocacao.equals(locacao.dtLocacao)) return false;
-        return dtDevolucao.equals(locacao.dtDevolucao);
+        return dtRetorno.equals(locacao.dtRetorno);
     }
 
     @Override
@@ -96,13 +94,13 @@ public class Locacao implements Serializable {
         result = 31 * result + usuario.hashCode();
         result = 31 * result + filme.hashCode();
         result = 31 * result + dtLocacao.hashCode();
-        result = 31 * result + dtDevolucao.hashCode();
+        result = 31 * result + dtRetorno.hashCode();
         return result;
     }
 
 	@Override
 	public String toString() {
 		return "Locacao [idlocacao=" + idlocacao + ", usuario=" + usuario + ", filme=" + filme + ", dtLocacao="
-				+ dtLocacao + ", dtDevolucao=" + dtDevolucao + "]";
+				+ dtLocacao + ", dtRetorno=" + dtRetorno + "]";
 	}
 }
