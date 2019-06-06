@@ -1,4 +1,4 @@
-package br.com.moviestore.model;
+package br.com.moviestore.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -32,6 +32,9 @@ public class Filme implements Serializable {
     @Column(name = "qt_copias",nullable = false)
     @Min(value = 0, message = "Não existe cópias Disponíveis")
     private int qtCopias;
+    
+    @Version
+    private Integer versao;
 
     public Long getIdfilme() {
         return idfilme;

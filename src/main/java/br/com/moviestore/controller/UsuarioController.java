@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.moviestore.model.Usuario;
+import br.com.moviestore.entity.Usuario;
 import br.com.moviestore.service.UsuarioService;
 
 @RestController
@@ -26,7 +26,4 @@ public class UsuarioController {
 	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
 		return new ResponseEntity<>(usuarioService.salvarUsuario(usuario), HttpStatus.CREATED);
 	}
-
-
-
 }

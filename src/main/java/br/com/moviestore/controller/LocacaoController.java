@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.moviestore.model.Locacao;
+import br.com.moviestore.entity.Locacao;
 import br.com.moviestore.service.LocacaoService;
 
 @RestController
@@ -24,7 +24,7 @@ public class LocacaoController {
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Locacao> locarFilme(@RequestParam String email, @RequestParam String titulo) {
-		return new ResponseEntity<>(locacaoService.locarFilme(titulo, email), HttpStatus.CREATED);
+		return new ResponseEntity<>(locacaoService.manterFilme(titulo, email), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(
@@ -32,7 +32,7 @@ public class LocacaoController {
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Locacao> deveolverFilme(@RequestParam String email, @RequestParam String titulo) {
-		return new ResponseEntity<>(locacaoService.devolverFilme(titulo, email), HttpStatus.OK);
+		return new ResponseEntity<>(locacaoService.manterFilme(titulo, email), HttpStatus.OK);
 	}
 
 }

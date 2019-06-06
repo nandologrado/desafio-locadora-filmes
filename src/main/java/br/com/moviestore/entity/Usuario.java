@@ -1,4 +1,4 @@
-package br.com.moviestore.model;
+package br.com.moviestore.entity;
 
 import java.io.Serializable;
 
@@ -25,17 +25,27 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idUsuario;
 	
-	@NotNull(message = "Por favor, informe seu nome do cliente")
+	@NotNull(message = "Por favor, informe seu nome")
 	@Column(name="nome_usuario", nullable = false)
 	private String nome;
 	
-	@NotBlank(message = "Por favor, informe o seu nome")
+	@NotBlank(message = "Por favor, informe o seu email")
 	@Column(nullable = false)
 	private String email;
 	
 	@NotNull(message = "Por favor, informe a senha")
 	@Column(nullable = false)
 	private String senha;
+
+	public Usuario(String nome, String email, String senha) {
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+	}
+
+	public Usuario() {
+		super();
+	}
 
 	public Long getIdUsuario() {
 		return idUsuario;

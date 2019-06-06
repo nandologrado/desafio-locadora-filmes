@@ -1,4 +1,4 @@
-package br.com.moviestore.model;
+package br.com.moviestore.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
