@@ -1,0 +1,342 @@
+Especificações de Webservices
+
+- Chamada Autenticar Usuários
+url: {server}/login
+request:
+method: POST,
+header: [
+			{
+				"key": "Content-Type",
+				"name": "Content-Type",
+				"value": "application/json",
+				"type": "text"
+			}
+		]
+body: {
+		"email": "nando.maciel@gmail.com",
+		"senha": "teste"
+	  }
+
+response:
+{
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kbyIsImV4cCI6MTU1OTgzODk5M30.V_Walk9DnnJrkGggGld44OPulSc2oHejDkqXlnMuxOdViGbWDoefBlD7E9ZuyS5qPSOE3AVhC7Bx6G85eOe-PQ"
+}
+
+Descrição:
+Operação de requisição de login do usuário(Cliente), o parâmetro é email e senha do usuário e retorno e o token que deve ser utilizado nas requisições de acesso restritivo.
+
+- Chamada Cadastrar Usuários
+url: {server}/usuario/cadastro
+request:
+method: POST,
+header: [
+			{
+				"key": "Content-Type",
+				"name": "Content-Type",
+				"value": "application/json",
+				"type": "text"
+			}
+		]
+body: {
+		"nome": "fernando",
+		"email": "nando.maciel2@gmail.com",
+		"senha": "teste"
+	  }
+
+response:
+body: {
+		"idUsuario": 1,
+		"nome": "fernando",
+		"email": "nando.maciel@gmail.com",
+		"senha": "RgcNS/k0+w1LBtnixG40aUTjIkRJAKQ119mpXm10NfU="
+	  }
+
+Descrição:
+Operação de cadastro do usuário, deve ser informado os campos obrigatórios o nome, e-mail e senha. A senha não precisa ser criptografada pois a api criptografa(Base64) e salva a senha.
+O retorno são as informações do usuario cadastrado.
+
+- Chamada Locar Filme
+url: {server}restrito/locacao/loca-filme?email=nando.maciel@gmail.com&titulo=MANDERLAY
+request:
+method: POST,
+header: [
+			{
+				"key": "Content-Type",
+				"name": "Content-Type",
+				"value": "application/json",
+				"type": "text"
+			},
+			{
+				"key": "Authorization",
+				"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kbyIsImV4cCI6MTU1OTgzNjc1MX0.2hA1wdEdsYj_vTeVvvc__zXZ0MujxfScZoRb5E_pgcyHUBmNYtrziux2GFQm89PPMo8Q0aEZibsNh1qBd_fkVg",
+				"type": "text"
+			}
+		]
+query: [
+			{
+				"key": "email",
+				"value": "nando.maciel@gmail.com"
+			},
+			{
+				"key": "titulo",
+				"value": "MANDERLAY"
+			}
+	]
+
+response:
+body: {
+		"idlocacao": 2,
+		"usuario": {
+			"idUsuario": 1,
+			"nome": "fernando",
+			"email": "nando.maciel@gmail.com",
+			"senha": "RgcNS/k0+w1LBtnixG40aUTjIkRJAKQ119mpXm10NfU="
+		},
+		"filme": {
+			"idfilme": 33,
+			"titulo": "MANDERLAY",
+			"diretor": "LARS VON TRIER",
+			"qtCopias": 2
+		},
+		"dtLocacao": "2019-06-06T16:28:48.805+0000",
+		"dtRetorno": null
+	}
+
+Descrição:
+Operação de cadastro da locação do filme. Requisição de acesso restrito é necessário a informação do token para acesso. É necessário o títudo do filme e e-mail para que 
+operação seja executada com sucesso. O retorno é o registro de locação sem a informação da data de devolução.
+
+- Chamada Devolver Filme
+url: {server}restrito/devolucao-filme?email=nando.maciel@gmail.com&titulo=MANDERLAY
+request:
+method: POST,
+header: [
+			{
+				"key": "Content-Type",
+				"name": "Content-Type",
+				"value": "application/json",
+				"type": "text"
+			},
+			{
+				"key": "Authorization",
+				"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kbyIsImV4cCI6MTU1OTgzNjc1MX0.2hA1wdEdsYj_vTeVvvc__zXZ0MujxfScZoRb5E_pgcyHUBmNYtrziux2GFQm89PPMo8Q0aEZibsNh1qBd_fkVg",
+				"type": "text"
+			}
+		]
+query: [
+			{
+				"key": "email",
+				"value": "nando.maciel@gmail.com"
+			},
+			{
+				"key": "titulo",
+				"value": "MANDERLAY"
+			}
+	]
+
+response:
+body: {
+			"idlocacao": 2,
+			"usuario": {
+				"idUsuario": 1,
+				"nome": "fernando",
+				"email": "nando.maciel@gmail.com",
+				"senha": "RgcNS/k0+w1LBtnixG40aUTjIkRJAKQ119mpXm10NfU="
+			},
+			"filme": {
+				"idfilme": 33,
+				"titulo": "MANDERLAY",
+				"diretor": "LARS VON TRIER",
+				"qtCopias": 3
+			},
+			"dtLocacao": "2019-06-05",
+			"dtRetorno": "2019-06-06T16:31:06.520+0000"
+	}
+
+Descrição:
+Operação de Atualizacao do cadastro da locação do filme. Resquisição de acesso restrito é necessário a informação do token para acesso. É necessário o títudo do filme e e-mail para que 
+operação seja executada com sucesso. O retorno é o registro de locação com a informação da data de devolução.
+
+- Chamada Listar filmes disponiveis.
+url: {server}/restrito/filme/lista-filmes-disponiveis
+request:
+method: GET,
+header: [
+			{
+				"key": "Content-Type",
+				"name": "Content-Type",
+				"value": "application/json",
+				"type": "text"
+			},
+			{
+				"key": "Authorization",
+				"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kbyIsImV4cCI6MTU1OTgzNjc1MX0.2hA1wdEdsYj_vTeVvvc__zXZ0MujxfScZoRb5E_pgcyHUBmNYtrziux2GFQm89PPMo8Q0aEZibsNh1qBd_fkVg",
+				"type": "text"
+			}
+		]
+
+response:
+body: [
+		{
+			"idfilme": 35,
+			"titulo": "9 ½ SEMANAS DE AMOR",
+			"diretor": "ADRIAN LYNE",
+			"qtCopias": 1
+		},
+		{
+			"idfilme": 27,
+			"titulo": "A ÁRVORE DA VIDA",
+			"diretor": "TERRENCE MALICK",
+			"qtCopias": 4
+		},
+		{
+			"idfilme": 34,
+			"titulo": "A ÚLTIMA TEMPESTADE",
+			"diretor": "PETER GREENAWAY",
+			"qtCopias": 1
+		},
+		{
+			"idfilme": 26,
+			"titulo": "AGONIA E ÊXTASE",
+			"diretor": "CAROL REED",
+			"qtCopias": 2
+		},
+		{
+			"idfilme": 21,
+			"titulo": "AS HORAS",
+			"diretor": "STEPHEN DALDRY",
+			"qtCopias": 1
+		},
+		{
+			"idfilme": 37,
+			"titulo": "CLOSER",
+			"diretor": "MIKE NICHOLS",
+			"qtCopias": 1
+		},
+		{
+			"idfilme": 30,
+			"titulo": "COSMÓPOLIS",
+			"diretor": "DAVID CRONENBERG",
+			"qtCopias": 1
+		},
+		{
+			"idfilme": 38,
+			"titulo": "DESEJO E REPARAÇÃO",
+			"diretor": "JOE WRIGHT",
+			"qtCopias": 1
+		},
+		{
+			"idfilme": 32,
+			"titulo": "DOGVILLE",
+			"diretor": "LARS VON TRIER",
+			"qtCopias": 1
+		},
+		{
+			"idfilme": 22,
+			"titulo": "FATAL",
+			"diretor": "ISABEL COIXET",
+			"qtCopias": 1
+		},
+		{
+			"idfilme": 33,
+			"titulo": "MANDERLAY",
+			"diretor": "LARS VON TRIER",
+			"qtCopias": 3
+		},
+		{
+			"idfilme": 39,
+			"titulo": "O CÉU QUE NOS PROTEGE",
+			"diretor": "BERNARDO BERTOLUCCI",
+			"qtCopias": 1
+		},
+		{
+			"idfilme": 28,
+			"titulo": "O LIVRO DE CABECEIRA",
+			"diretor": "PETER GREENAWAY",
+			"qtCopias": 1
+		},
+		{
+			"idfilme": 29,
+			"titulo": "O PIANO",
+			"diretor": "JANE CAMPION",
+			"qtCopias": 1
+		},
+		{
+			"idfilme": 24,
+			"titulo": "QUEM TEM MEDO DE VIRGINIA WOOLF?",
+			"diretor": "MIKE NICHOLS",
+			"qtCopias": 1
+		},
+		{
+			"idfilme": 36,
+			"titulo": "QUERO SER JOHN MALKOVICH",
+			"diretor": "SPIKE JONZE",
+			"qtCopias": 4
+		},
+		{
+			"idfilme": 31,
+			"titulo": "RETORNO A HOWARDS END",
+			"diretor": "JAMES IVORY",
+			"qtCopias": 2
+		},
+		{
+			"idfilme": 23,
+			"titulo": "TESS UMA LIÇÃO DE VIDA",
+			"diretor": "ROMAN POLANSKI",
+			"qtCopias": 3
+		},
+		{
+			"idfilme": 40,
+			"titulo": "UM LUGAR NA PLATEIA",
+			"diretor": "DANIÈLE THOMPSON",
+			"qtCopias": 5
+		},
+		{
+			"idfilme": 25,
+			"titulo": "VIDA E ARTE DE GEORGIA O’KEEFFE",
+			"diretor": "BOB BALABAN",
+			"qtCopias": 5
+		}
+	]
+
+Descrição:
+Operação de listagem de filmes disponíveis. Resquisição de acesso restrito é necessário a informação do token para acesso. O retorno é uma listagem alfabetica de filmes disponíveis para locação.
+
+- Chamada Listar filmes por título.
+url: {server}/restrito/filme/lista-filmes-disponiveis
+request:
+method: GET,
+header: [
+			{
+				"key": "Content-Type",
+				"name": "Content-Type",
+				"value": "application/json",
+				"type": "text"
+			},
+			{
+				"key": "Authorization",
+				"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kbyIsImV4cCI6MTU1OTgzNjc1MX0.2hA1wdEdsYj_vTeVvvc__zXZ0MujxfScZoRb5E_pgcyHUBmNYtrziux2GFQm89PPMo8Q0aEZibsNh1qBd_fkVg",
+				"type": "text"
+			}
+		]
+query: [
+			{
+				"key": "titulo",
+				"value": "teste"
+			}
+		]
+
+response:
+body: {
+		"idfilme": 37,
+		"titulo": "CLOSER",
+		"diretor": "MIKE NICHOLS",
+		"qtCopias": 1
+	}
+
+Descrição:
+Operação de pesquisa de filmes por título. Resquisição de acesso restrito é necessário a informação do token para acesso. É necessário o títudo do filme para que 
+operação seja executada com sucesso. O retorno é o filme pesquisado.
+
+	  
+	  
